@@ -51,6 +51,36 @@ sandbox/SUID issues in this environment), but it does nothing for the
 snap-private-`/tmp` problem — the `$HOME` staging step is what actually
 fixes it.
 
+## The gotcha: --window-size below ~500px wide is silently ignored
+
+`--headless --screenshot=out.png --window-size=W,H` for `W` below about 500
+does **not** actually lay the page out at `W` pixels wide — Chromium's
+headless screenshot mode clamps the internal layout viewport to a ~500px
+floor regardless of a smaller requested width, confirmed via
+`window.innerWidth` injected into the page. But the *output PNG* is still
+cropped to the requested `W×H`. Net effect: you get a screenshot that looks
+like the page overflows/gets cut off at the right edge (e.g. text appearing
+truncated), when really the page laid out fine at 500px and the image is
+just a crop of the left `W` pixels of that wider layout. This reproduces
+with `--headless=old` too and isn't fixed by `--force-device-scale-factor=1`.
+
+This matters for verifying phone-width (~360-430px) layouts: a screenshot at
+`--window-size=390,844` is **not trustworthy** for judging overflow/wrapping
+— you're actually looking at a crop of a 500px-wide render, not a true
+390px one.
+
+Workarounds, in order of preference:
+1. **Verify via injected JS instead of pixels** for anything overflow/width
+   sensitive: load the page and check `el.scrollWidth <= el.clientWidth`
+   (no overflow) rather than eyeballing a cropped screenshot.
+2. **Screenshot at ≥500px** (e.g. 600) as an approximate "narrow viewport"
+   stand-in when a true phone-width visual is only for a sanity check, not
+   a precise layout judgment.
+3. Standard CSS (percentage widths, default `white-space: normal` wrapping)
+   that already works at ~484px content width via method 1 will wrap
+   correctly on an even narrower real phone too — don't chase pixel-exact
+   confirmation below the 500px floor, it isn't obtainable this way.
+
 ## Don't reach for these
 
 - `snap install chromium --devmode` / switching to `classic` confinement —
