@@ -116,3 +116,12 @@ reinitialization entirely (`Host halt failed, -19`), taking down bus 3 *and*
 bus 4 together (BT, webcam, smartcard reader, any plugged-in USB devices) and
 requiring a reboot anyway. The driver unbind/bind approach above is the
 correct lighter-weight alternative — always try that first.
+
+## Usage history
+
+- **2026-07-11**: mid-operation failure, xHCI port wedged, required full reboot.
+- **2026-08-20**: enumeration failure, fixed live with the `xhci_hcd` unbind/bind.
+- **2026-09-25**: enumeration failure (`No default controller available`,
+  bus 3 missing `8087:0026`), fixed live with the `xhci_hcd` unbind/bind on
+  `0000:00:14.0`; `bluetooth.service` restart was also needed afterward for
+  `bluetoothctl` to pick up `hci0`.
