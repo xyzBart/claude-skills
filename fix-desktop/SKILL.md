@@ -21,6 +21,9 @@ root cause), it gets its own skill instead of living here — see below.
 
 - **steam-proton-fixes** skill (`~/.claude/skills/steam-proton-fixes/`) —
   Steam/Proton game launch/crash/freeze issues.
+- **fix-window-positioning** skill (`~/.claude/skills/fix-window-positioning/`) —
+  app opening on the wrong monitor (laptop panel vs BenQ external); confirmed
+  root cause + fix pattern, demonstrated on IntelliJ IDEA.
 - **bluetooth-resume-fix** skill (`~/.claude/skills/bluetooth-resume-fix/`) —
   Bluetooth not coming back after suspend/resume.
 - **~/repos/env/desktop/dell-latitude-5420/** (legacy Claude Project, not yet
