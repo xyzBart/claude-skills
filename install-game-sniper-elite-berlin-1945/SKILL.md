@@ -7,6 +7,9 @@ allowed-tools: Bash, Read, Edit, WebSearch
 
 # Sniper Elite - Berlin 1945 (GOG) on Wine
 
+See [[install-game]] for general technique (D3D-version check before first launch, DXVK/d8vk
+pinning, hardware/OS baseline) that applies across all Wine game installs on this machine.
+
 Game lives at `~/mediaCenter/games/SniperEliteBerlin1945/` with its own dedicated win32 Wine
 prefix at `~/mediaCenter/games/SniperEliteBerlin1945/.wine` (see [[project_gog_wine_gaming]]
 memory for the general GOG/Wine library layout on this machine). This is the original 2005

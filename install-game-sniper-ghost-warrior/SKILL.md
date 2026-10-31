@@ -7,6 +7,9 @@ allowed-tools: Bash, Read, Edit, WebSearch
 
 # Sniper: Ghost Warrior (GOG) on Wine
 
+See [[install-game]] for general technique (D3D-version check before first launch, DXVK
+pinning, hardware/OS baseline) that applies across all Wine game installs on this machine.
+
 Game lives at `~/mediaCenter/games/SniperGhostWarrior/` with its own dedicated win32 Wine
 prefix at `~/mediaCenter/games/SniperGhostWarrior/.wine` (see [[project_gog_wine_gaming]] memory
 for the general GOG/Wine library layout on this machine). GOG installer files are the
