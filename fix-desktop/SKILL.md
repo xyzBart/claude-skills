@@ -34,6 +34,9 @@ root cause), it gets its own skill instead of living here — see below.
   a skill) — printer config dump/fix for that machine.
 - **install-software-digikam** skill (`~/.claude/skills/install-software-digikam/`) —
   digiKam AppImage install layout, font-scaling fix, startup-speed fix.
+- **fix-desktop-thumbnail** skill (`~/.claude/skills/fix-desktop-thumbnail/`) —
+  Nautilus/GNOME thumbnails not showing (images or documents/ebooks);
+  confirmed root cause was a missing AppArmor conffile for Nautilus.
 
 These will likely get merged into one consolidated desktop-fixes skill
 eventually (this one, steam-proton-fixes, bluetooth-resume-fix, and the two
