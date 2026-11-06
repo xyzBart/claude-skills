@@ -130,4 +130,32 @@ GNOME Shell's app-matching rather than Codium itself):
    alt-tab or any app-grouped view — functionally harmless, just not
    grouped under a named app there.
 
+### digiKam: UI text too small, doesn't scale with GNOME's "Large Text" accessibility setting
+
+**Status**: permanent, added 2026-11-06.
+**File**: `~/.local/share/applications/digikam.desktop`, `Exec=` line.
+**Fix**: `Exec=bash -c 'QT_FONT_DPI=140 /home/uzer/progs/digikam'`
+
+digiKam here runs as a Qt6 AppImage (`~/progs/digiKam-9.0.0-Qt6-x86-64.appimage`,
+symlinked from `~/progs/digikam`). This machine's GNOME "Large Text" toggle
+sets `org.gnome.desktop.interface text-scaling-factor` to `1.25`, which
+gnome-settings-daemon propagates to X11/XWayland apps as `Xft.dpi: 120`
+(`96 * 1.25`) in the X resource database — confirmed via `xrdb -query`. Qt's
+`xcb` platform backend (digiKam falls back to `xcb`; the log shows `Could
+not find the Qt platform plugin "wayland"`) reads `Xft.dpi` automatically,
+so digiKam already renders at 120 DPI *without* any override — not 96 as
+first assumed. That's why an initial fix attempt of `QT_FONT_DPI=120` was a
+no-op (identical to the automatic baseline, so no visible change) and caused
+a long back-and-forth misdiagnosing "the fix isn't working." Confirmed the
+env var does work at all by testing an exaggerated `QT_FONT_DPI=240`
+(visibly huge, incl. splash screen) — proved the mechanism, not the value,
+needed adjusting. Bisected by hand with a terminal loop (`for v in 96 110
+125 140 150 165; do QT_FONT_DPI=$v /home/uzer/progs/digikam; done`, closing
+each window to advance) to find a size the user actually liked: **140**,
+above the automatic 120 but short of full doubling.
+**To re-tune if "Large Text" or the monitor setup changes**: rerun that
+bisection loop and edit the `QT_FONT_DPI=` number in the `Exec=` line.
+**Caveat**: only takes effect on a fresh process start, same as the Codium
+fix above — fully quit any running digiKam first.
+
 <!-- Add new small fixes below, same format: Status / File / Fix / why -->
