@@ -26,6 +26,9 @@ root cause), it gets its own skill instead of living here — see below.
   root cause + fix pattern, demonstrated on IntelliJ IDEA.
 - **bluetooth-resume-fix** skill (`~/.claude/skills/bluetooth-resume-fix/`) —
   Bluetooth not coming back after suspend/resume.
+- **fix-desktop-resume-lag** skill
+  (`~/.claude/skills/fix-desktop-resume-lag/`) — general desktop lag for
+  a while after resume (systemd timer pile-up, anacron day-change batch).
 - **~/repos/env/desktop/dell-latitude-5420/** (legacy Claude Project, not yet
   a skill) — external monitor/BenQ blackout issues, lid-close action, suspend
   /resume, printer (CUPS/avahi), Mozilla file-drop. Has its own `monitor/` and
